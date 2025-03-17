@@ -1,0 +1,25 @@
+1. npm i express-isGenerator
+2. npx express --view=pub -> Y
+3. npm update
+4. npm i nodemon
+5. Run: npm start
+
+// Middleware 
+tất cả những gì nằm giữa request và response
+
+// Hibernate - EntityFramework - Mongoose
+
+npm i mongoose
+
+module.exports = mongoose.model('product', productSchema) // import collection cho database
+
+// app.js
+1. var productsRouter = require('./routes/products');
+    app.use('/products', productsRouter)
+2. var mongoose = require('mongoose')
+    mongoose.connect('[connectionString]');
+    mongoose.connection.on('connected', ()=>{
+        console.log('connected')
+    })
+// package.json
+node => nodemon
