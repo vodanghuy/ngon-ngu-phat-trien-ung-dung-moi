@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var productSchema = require('../schemas/product')
+var categorySchema = require('../schemas/category')
 
 /* GET products listing. */
 router.get('/', async function(req, res, next) {
-    let products = await productSchema.find({})
+    let products = await productSchema.find({}).populate('category')
     res.status(200).send({
       success:true,
       data:products
@@ -28,6 +29,10 @@ router.get('/', async function(req, res, next) {
   router.post('/', async function(req, res, next) {
     try {
       let body = req.body;
+      let category = req.body.category
+      let getCategory = await categorySchema.find({
+        name:category
+      })
       let newProduct = new productSchema({
         name:body.name,
         price:body.price?body.price:0,

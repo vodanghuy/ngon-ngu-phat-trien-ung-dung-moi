@@ -19,8 +19,9 @@ let productSchema = new mongoose.Schema({
         type:String,
         default:"",
     },category:{
-        type:String,
-        required:true
+        type: mongoose.Types.ObjectId,
+        ref:'category',
+        required: true
     },
     isDeleted:{
         type: Boolean,

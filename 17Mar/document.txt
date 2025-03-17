@@ -1,5 +1,5 @@
-1. npm i express-isGenerator
-2. npx express --view=pub -> Y
+1. npm i express-generator
+2. npx express --view=pug -> Y
 3. npm update
 4. npm i nodemon
 5. Run: npm start
