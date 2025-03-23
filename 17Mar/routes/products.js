@@ -115,7 +115,7 @@ router.get('/', async function(req, res, next) {
           data:product
         });
       }else{
-        res.status(404).send({
+        res.status(400).send({
           success:false,
           message:"ID khomng ton tai"
         });
