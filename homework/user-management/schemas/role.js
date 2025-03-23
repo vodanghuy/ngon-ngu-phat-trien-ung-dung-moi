@@ -1,16 +1,16 @@
-let mongoose = require ('mongoose')
+let mongoose = require('mongoose')
 let roleSchema = new mongoose.Schema({
     name:{
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        required: true
     },
-    isDeleted:{
-        type: Boolean,
-        default: false
-    },
+    description:{
+        type:String,
+        default: ""
+    }
 },
 {
     timestamp: true
 })
-module.exports = mongoose.model('role', roleSchema)
+module.exports = mongoose.model("role", roleSchema)

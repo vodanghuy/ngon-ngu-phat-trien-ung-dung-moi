@@ -4,8 +4,48 @@ var productSchema = require('../schemas/product')
 var categorySchema = require('../schemas/category')
 
 /* GET products listing. */
+
+function BuildQuery(query)
+{
+  let result = {};
+  if(query.name)
+  {
+    result.name = new RegExp(query.name,'i')
+  }
+  result.price = {};
+  if(query.price)
+  {
+    if(query.price.$gte)
+    {
+      result.price.$gte = Number(query.price.$gte); 
+    }
+    else
+    {
+      result.price.$gte = 0;
+    }
+    if(query.price.$lte)
+    {
+      result.price.$lte = Number(query.price.$lte);
+    }
+    else
+    {
+      result.price.$lte = 10000;
+    }
+  }
+  else
+  {
+    result.price.$gte = 0;
+    result.price.$lte = 10000;
+  }
+  return result;
+}
+
 router.get('/', async function(req, res, next) {
-    let products = await productSchema.find({}).populate('category')
+  console.log(BuildQuery(req.query));
+    let products = await productSchema.find(BuildQuery(req.query)).populate({
+      path: 'category',
+      select: 'name'
+    })
     res.status(200).send({
       success:true,
       data:products
@@ -30,14 +70,14 @@ router.get('/', async function(req, res, next) {
     try {
       let body = req.body;
       let category = req.body.category
-      let getCategory = await categorySchema.find({
+      let getCategory = await categorySchema.findOne({
         name:category
       })
       let newProduct = new productSchema({
         name:body.name,
         price:body.price?body.price:0,
         quantity:body.quantity?body.quantity:0,
-        category:body.category,
+        category:getCategory._id,
       });
       await newProduct.save()
       res.status(200).send({

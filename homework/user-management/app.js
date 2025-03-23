@@ -3,18 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var rolesRouter = require('./routes/roles');
 
 var app = express();
-mongoose.connect('mongodb://localhost:27017/homework')
-mongoose.connection.on('connected', () => {
-  console.log("connected");
+mongoose.connect('mongodb://localhost:27017/user-management')
+mongoose.connection.on('connected', ()=>{
+  console.log('Database connected.');
 })
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

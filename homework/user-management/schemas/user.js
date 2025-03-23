@@ -1,25 +1,42 @@
-let mongoose = require ('mongoose')
+let mongoose = require('mongoose')
 let userSchema = new mongoose.Schema({
     username:{
         type: String,
-        required: true,
-        unique: true
+        unique: [true, "Username must be unique"],
+        required: true
     },
     password:{
         type: String,
         required: true
     },
-    isDeleted:{
+    email:{
+        type: String,
+        required: true,
+        unique: true
+    },
+    fullName:{
+        type: String,
+        default: ""
+    },
+    avatarURL:{
+        type: String,
+        default: ""
+    },
+    status:{
         type: Boolean,
         default: false
     },
     role:{
         type: mongoose.Types.ObjectId,
-        ref: 'role',
-        required: true
+        ref: 'role'
+    },
+    loginCount:{
+        type: Number,
+        default: 0,
+        min: 0
     }
 },
 {
-    timestamp: true
+    timestamps: true
 })
-module.exports = mongoose.model('user', userSchema)
+module.exports = mongoose.model("user", userSchema)
